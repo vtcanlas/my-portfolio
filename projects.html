@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" href="css/mycss.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        @font-face {
+            font-family: "Metropolis-Light";
+            src: url(fonts/Metropolis-Light.otf);
+        }
+        @font-face{
+            font-family: "Metropolis-Bold";
+            src: url(fonts/Metropolis-Bold.otf);
+        }
+        .projspics{
+            width: 500px;
+            height:500px;
+            border-style: solid 100px;
+        }
+        body {
+            font-family: "Metropolis-Light";
+        }
+        .row{
+            margin-top: 100px;
+            padding: 15px;
+        }
+        #intro{
+            font-family: "Metropolis-Bold";
+            padding-left: 10%;
+            font-size: 75px;
+        }
+        #introp p{
+            font-family: "Metropolis-Light";
+            font-size: 35px;
+            padding-right: 150px;
+            color: gray;
+        }
+        hr{
+            width: 95%;
+        }
+        .col h1{
+            font-family: "Metropolis-Bold";
+            font-size: 300%;
+        }
+        .col p{
+            font-family: "Metropolis-Light";
+            font-size:180%;
+            color:gray;
+        }
+        #role {
+            color: goldenrod;
+        }
+        #row1{
+            margin-top:2%;
+        }
+        @media screen and (max-width: 1000px) {
+            #intro {
+                font-size: 30px;
+            }
+
+            #introp p{
+                font-size: 15px;
+                padding-left: 10%;
+            }
+
+            .projspics{
+                width:300px;
+                height:300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id = "navbar">
+        <nav class="navbar navbar-dark navbar">
+            <ul class="nav navbar-nav navbar">
+                <li class="name"><p> Vincent </p> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item active"><a href="projects.html"   class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <!-- <li class="nav-item"><a href="offers.html" class="nav-link">Offers</a></li> -->
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="row" id="row1">
+            <hr>
+            <div class="col">
+                <h1 id="intro">I aim to develop web solutions that are highly responsive to the needs of our clients and the society.</h1>
+            </div>
+            <div class="col" id="introp">
+                <p> The following projects are either collaborative or independent, taking on different roles per project as stated below.</p>
+                <p> These systems are made while keeping functionality and design in mind, these could also be heavily influenced by the clients' requests.</p>
+            </div>
+        </div>
+    <hr>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="qcresorts/home.html" style="color:white;"><h1>QCResorts</h1> </a>
+                <p id="role"> WEB // LEAD DESIGN // BRAND </p>
+                <p> <i>Capstone Project </i> -  QCResorts is a web project designed for resort owners, offering a platform for promotion and online transactions. It includes informative pages, a user-friendly content management system, automated reservation module, and generates data-driven reports.</p>
+            </div>
+            <div class="col">
+                <img class = "projspics" src="image/qcresorts_thumbnail.jpg">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img class = "projspics" src="image/jjlogo.jpg">
+            </div>
+            <div class="col">
+                <a href="businesswebsite/index.html" style="color:white;"><h1>JJ's Hoodies
+                </h1> </a>
+                <p id="role"> WEB // INDEPENDENT // BRAND </p>
+                <p> An ecommerce website showcasing products from JJ's brand. This sleek design website uses a more modern approach to highlight the products to retain the web visitors' engagement.</p>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br>
+    </div>
+    <script>
+        ScrollReveal().reveal('.col',{distance:'200px',duration:4000});
+    </script>
+
+</body>
+
+</html>

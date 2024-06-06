@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" href="css/mycss.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+         @font-face {
+            font-family: "Metropolis-Light";
+            src: url(fonts/Metropolis-Light.otf);
+        }
+        @font-face{
+            font-family: "Metropolis-Bold";
+            src: url(fonts/Metropolis-Bold.otf);
+        }
+        .panel-heading{
+            background-color: black;
+        }
+        body{
+            
+            font-family: "Metropolis-Light";
+            font-size:200%;
+        }
+        .panel-heading:hover a{
+            color: black;
+            transition: 0.4s;
+            text-decoration: none;
+        }
+        .panel-heading:hover {
+            transition:0.4s;
+            background-color:white;
+        }
+
+        .panel-heading a{
+            text-decoration: none;
+            color: white;
+        }
+        .panel-body{
+            background-color: black;
+            font-family: "Metropolis-Light";
+            color: white;
+        }
+        h1{
+            font-family: "Metropolis-Bold";
+        }
+        #contactus p{
+            font-family: "Metropolis-Light";
+            font-size: 23px;
+            margin-bottom: 6%;
+        }
+        
+        #contactdesc{
+            color: #ededed;
+        }
+        .panel{
+            margin-top: 7%;
+        }
+
+        #submitticket{
+            color: white!important;
+        }
+
+        .btn{
+            background-color: black;
+            border-color: white;
+        }
+
+        .btn:hover{
+            background-color: white;
+            color:black;
+            transition: 0.4s;
+            border-color: black;
+        }
+
+        .container{
+            animation: fadeIn 1.5s;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="image/videoplayback (1).mp4" type="video/mp4">
+    </video>
+
+    <div id = "navbar">
+        <nav class="navbar navbar-dark navbar">
+            <ul class="nav navbar-nav navbar">
+                <li class="name"><p> Vincent</p> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="projects.html"   class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <!-- <li class="nav-item"><a href="offers.html" class="nav-link">Offers</a></li> -->
+                <li class="nav-item active"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <br><br><br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1> Frequently Asked Questions</h1>
+                <div class="panel-group" id="myaccordion">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4>
+                                <a href="#colap1" data-toggle="collapse" data-parent="#myaccordion">Availed Services Support <span class="glyphicon glyphicon-menu-down"></span> </a>
+                            </h4>
+                        </div>
+                        <div class="collapse panel-collapse" id="colap1">
+                            <div class="panel-body">For service troubles, please provide a detailed description and explanation of the error. Provide screenshots if possible and email to vincentcanlas2000@gmail.com and possible solutions will be provided.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group" id="myaccordion">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4>
+                                <a href="#colap2" data-toggle="collapse" data-parent="#myaccordion">Privacy Policy <span class="glyphicon glyphicon-menu-down"></span> </a>
+                            </h4>
+                        </div>
+                        <div class="collapse panel-collapse" id="colap2">
+                            <div class="panel-body">Our Privacy Policy ensures the protection of your personal and sensitive information when using our web systems. We collect and use data with your consent, employing industry-standard security measures to safeguard it. We do not share your information without your explicit consent, and we retain it only for as long as necessary. Our use of cookies and tracking technologies aims to enhance user experience while respecting your choices. You have the right to access, modify, or delete your data, and we regularly update our policy to reflect any changes. </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group" id="myaccordion">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h4>
+                                <a href="#colap3" data-toggle="collapse" data-parent="#myaccordion"> Pricing Structure <span class="glyphicon glyphicon-menu-down"></span> </a>
+                            </h4>
+                        </div>
+                        <div class="collapse panel-collapse" id="colap3">
+                            <div class="panel-body">Pricing for web development services can vary depending on the project's complexity, size, and specific requirements. I provide customized quotes based on individual project needs. Let's discuss your project details, and I'll be happy to provide you with a transparent and competitive pricing estimate.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div id="contactus"> 
+                    <h1> Contact Us</h1>
+                    <p id="contactdesc">Don't hesitate to reach out with any inquiries, collaborations, or project opportunities. I value communication and look forward to discussing how we can bring your ideas to life.</p>
+                    <p> <span class="glyphicon glyphicon-envelope"></span> vincentcanlas2000@gmail.com</p>
+                    <p> <span class="glyphicon glyphicon-user"></span> linkedin.com/in/vincent-canlas-a27b2620b/</p>
+                    <p> <span class="glyphicon glyphicon-phone-alt"></span> 0976 491 8396</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 id="submitticket"> Or submit a ticket by filling up this form:</h1> 
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="container">        
+        <form class="form-horizontal">
+        <div class ="form-group">
+            <label class="control-label col-md-2">Department: </label>
+                <div class="col-md-10">
+                    <select class="form-control">
+                        <option>Web Dev</option>
+                        <option>App Dev</option>
+                        <option>Database Handling</option>
+                        <option>IT Solutions</option>
+                        <option>Branding</option>
+                        <option>Photo/Video Editing</option>
+                    </select>
+                </div>
+        </div>
+        <div class ="form-group">
+            <label for="name" class="control-label col-md-2">Subject:</label>
+                <div class="col-md-10">	
+                    <input type="text" class="form-control">
+                </div>
+        </div>
+        <div class ="form-group">
+            <label for="comment" class="control-label col-md-2">Ticket Detail:</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="10"></textarea>
+                </div>
+        </div>
+        <div class ="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-success btn-block">Click to Submit</button>
+            </div>
+        </div> 
+        </form>
+    </div>
+    -->
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" href="css/mycss.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+
+        @font-face {
+            font-family: "Metropolis-Light";
+            src: url(fonts/Metropolis-Light.otf);
+        }
+        @font-face{
+            font-family: "Metropolis-Bold";
+            src: url(fonts/Metropolis-Bold.otf);
+        }
+        #shadowpic {
+            width: 23%;
+            height:23%;
+            margin-left: 5%;
+        }
+        body {
+            font-family: "Metropolis-Light";
+        }
+        #abouttext h1 {
+            font-size: 800%;
+            font-family: "Metropolis-Bold";
+            color: goldenrod;
+            text-align: right;
+        }
+        #abouttext p{
+            text-align: right;
+            color: gray;
+            font-size: 200%;
+            padding-left: 10%;
+        }
+        .midpics{
+            height: 450px;
+            width:450px;
+            box-shadow: 10px 10px 5px #aaaaaa;
+        }
+        h2 {
+            font-family: "Metropolis-Light";
+            color:goldenrod;
+            font-size: 60px;
+            margin-bottom: 40px;
+            margin-top: 60px;
+        }
+        p {
+            font-family: "Metropolis-Light";
+            color:gray;
+            font-size: 20px;
+        }
+        #foundation {
+            margin-top: 200px;
+
+            font-family: "Metropolis-Bold";
+            margin-bottom: 100px;
+        }
+        #bottomz{
+            padding-left: 5%;
+            background-color: #e6e6e6;
+
+        }
+
+        #bottomz p{
+            padding-right: 30%;
+        }
+        @media screen and (max-width: 1000px) {
+            .midpics {
+                height:200px;
+                width:200px;
+            }
+            #abouttext p{
+                font-size: 17px;
+                color: white;
+                text-align: left;
+            }
+            #shadowpic {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id = "navbar">
+        <nav class="navbar navbar-dark navbar">
+            <ul class="nav navbar-nav navbar">
+                <li class="name"><p> Vincent </p> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="projects.html"   class="nav-link">Projects</a></li>
+                <li class="nav-item active"><a href="about.html" class="nav-link">About</a></li>
+                <!-- <li class="nav-item"><a href="offers.html" class="nav-link">Offers</a></li> -->
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="abouttext" class="col">
+                <h1> Vincent </h1>
+                <p>I am a hardworking and goal-oriented individual with a strong sense of personal conviction. I firmly believe that my skills can bring substantial benefits to the people I collaborate with. My work ethic is centered around delivering high-quality outcomes and projects, as I consistently strive for excellence in everything I do. I am versatile and capable of both leading and being a valuable team member, as I value the dynamics of mutually beneficial teamwork.</p>
+            </div>
+            <div class="col">
+                <img id="shadowpic" src="image/shadowpicture1.jpg">
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+    <div id="bottomz">
+        <br>
+        <br>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <img class ="midpics" src="image/visionpic.jpg">
+                <h2> Vision </h2>
+                <p> Our systems and applications go through careful and thorough planning of not just the current needs of the client but as well as for their future.</p>
+                </div>
+                <div class="col">
+                    <img class ="midpics" src="image/designpc.jpg">
+                    <h2> Design </h2>
+                    <p> Creating innovative and luxurious identity for each system or application is our ambition. Timeless aesthetics that make marks and is not easily forgotten.</p>
+                </div>
+                <div class="col">
+                    <img class ="midpics" src="image/functionbackground.jpg">
+                    <h2> Function </h2>
+                    <p> The functionality of the products is meticulously maintained with utmost precision, ensuring they stay up-to-date.</p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <script>
+        ScrollReveal().reveal('.col',{distance:'100px',duration:3000});
+    </script>
+</body>
+</html>

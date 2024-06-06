@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" href="css/mycss.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        @font-face {
+            font-family: "Metropolis-Light";
+            src: url(fonts/Metropolis-Light.otf);
+        }
+        @font-face{
+            font-family: "Metropolis-Bold";
+            src: url(fonts/Metropolis-Bold.otf);
+        }
+        body {
+            font-family: "Metropolis-Light";
+        }
+        .item {
+            width: 100%;
+            height:100%;
+        }
+        h1 {
+            color: black;
+            font-family: "Metropolis-Bold";
+        }
+        p {
+            font-family: "Metropolis-Light";
+            font-size: 25px;
+            color:whitesmoke; 
+        }
+        .modal p {
+            font-family: "Metropolis-Light";
+            font-size: 25px;
+            color:#242424;
+        }
+        h2{
+            font-family:"Metropolis-Bold";
+            font-size: 30px;
+            color: goldenrod;
+        }
+        .btn{
+            background-color: black;
+            border-color: white;
+            color: white;
+        }
+        .modal-body, .modal-header{
+            background-color: white;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+            color: green;
+            background-color: black !important;
+            border-color:black; /*set the color you want here*/
+        }
+
+        .item img {
+            width: 100%;
+            height:100%;
+        }
+        
+        .col {
+            padding: 8%;
+        }
+
+        #row2{
+            background-color: #e6e6e6;
+        }
+
+        #row2 p{
+            color: gray;
+        }
+
+        #row2 .btn {
+            background-color: #e6e6e6;
+            border-color: black;
+            color: black;
+        }
+
+        .container-fluid {
+            animation: fadeIn 0.9s;
+        }
+    </style>
+</head>
+<body>
+    <div id = "navbar">
+        <nav class="navbar navbar-dark navbar">
+            <ul class="nav navbar-nav navbar">
+                <li class="name"><p> JJ </p> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="projects.html"   class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item active"><a href="offers.html" class="nav-link">Offers</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2> WEB DESIGN</h2>
+                <p> Full package of web design for your company/personal/corporate needs. Our team utilizes different and various software implementation to make each website unique and filled with personality.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2> APP DEVELOPMENT</h2>
+                <p> Application development using different types of languages depending upon the client's request, we utilize many necessary tools required to make your desired application fulfill its function.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2> DATABASE MANAGING</h2>
+                <p> Precise database managing with little to no margin for error, this includes: keeping data and information about your services protected and well-preserved through our capable servers.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row2">
+            <div class="col">
+                <h2> IT SOLUTIONS</h2>
+                <p> Includes building proprietary cloud services, giving innovative approaches, Computer Training, Help Desk Support and many more information technology that will help your business grow.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2> BRANDING</h2>
+                <p> From logo-making to overall theme designing we can handle your business' or personal agenda's identity and make it more to your desired taste. Tell your story with us.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2> VIDEO/PHOTO EDITING</h2>
+                <p> Small scale photo and video editing services that could make your media more engaging and enticing. Using different types of editing software to fully maximize your media's potential.</p>
+                <button class="btn btn-success" data-toggle="modal" data-target="#myModal">View Details</button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1>Web Design Offer</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p>Our luxury web design package consists of: </p>
+                                <div id="mycarousel" class="carousel slide" data-ride="carousel" style="width:580px;">
+                                    <ol class="carousel-indicators">
+                                      <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#mycarousel" data-slide-to="1"></li>
+                                      <li data-target="#mycarousel" data-slide-to="2"></li>
+                                    </ol>
+                      
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="image/web0.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web1.jpg" width="1000px">
+                                        </div>
+                                        <div class="item">
+                                            <img src="image/web2.jpg" width="1000px">
+                                        </div>
+                                    </div>
+                      
+                                    <a class="left carousel-control" href="#mycarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#mycarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <p>Make sure to contact us for more information and clarificaitons. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

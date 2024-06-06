@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <link rel="stylesheet" href="css/mycss.css">
+    <style>
+        @font-face {
+            font-family: "Metropolis-Light";
+            src: url(fonts/Metropolis-Light.otf);
+        }
+        @font-face {
+            font-family: "Metropolis-Bold";
+            src: url(fonts/Metropolis-Bold.otf);
+        }
+        body {
+            font-family: "Metropolis-Light";
+        }
+        #midleft h1 {
+            font-family: "Metropolis-Bold";
+            font-size: 100px;
+        }
+        #h1vision {
+            animation: fadeLeft 3s;
+        }
+        #h1design {
+            animation: fadeLeft 6s;
+        }
+        #h1function {
+            animation: fadeLeft 9s;
+        }
+        #midleft p {
+            animation: fadeIn 1.5s;
+            font-family: "Metropolis-Light";
+            font-size: 24px;
+            color: gray;
+        }
+        @media screen and (max-width: 1000px) {
+            h1 {
+                font-size: 5px;
+            }
+            .col p {
+                margin-left: 50%;
+                padding-bottom: 50px;
+                visibility: hidden;
+            }
+            #bottom {
+                visibility: hidden;
+            }
+            #midleft h1 {
+                margin-left: -150%;
+                font-size: 200%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="image/videoplayback (1).mp4" type="video/mp4">
+    </video>
+    
+    <div id="navbar">
+    <nav class="navbar navbar-dark navbar">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+    <div id="midleft">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <h1 id="h1vision"><span style="color: goldenrod;">VI</span>SUALIZE</h1>
+                    <h1 id="h1design">I<span style="color: goldenrod;">N</span>NOVATE</h1>
+                    <h1 id="h1function">AC<span style="color: goldenrod;">CENT</span>UATE</h1>
+                </div>
+                <div class="col">
+                    <p>"My web designing process involves</p>
+                    <p>visualizing ideas, innovating solutions</p>
+                    <p>and accentuating designs."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom">
+        <h1>Web Portfolio</h1>
+        <h2>Vincent Canlas</h2>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
