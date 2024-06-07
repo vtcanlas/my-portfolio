@@ -1,0 +1,290 @@
+<html>
+      <head>
+            <title>JJ Music Blog</title>
+
+            <link rel="stylesheet" href="css/bootstrap.min.css">
+            <link rel="stylesheet" href="css/bootstrap-grid.css">
+            <script src="js\jquery.js"></script>
+            <script src="js\bootstrap.min.js"></script>
+            <script src="https://unpkg.com/scrollreveal"></script>
+            <style>
+                 @font-face {
+                    font-family: "Metropolis-Light";
+                    src: url(fonts/Metropolis-Light.otf);
+                }
+                @font-face{
+                    font-family: "Metropolis-Bold";
+                    src: url(fonts/Metropolis-Bold.otf);
+                }
+                
+                .navbar a{
+                    color:white;
+                }
+                .panel-heading a{
+                    text-decoration: none;
+                    color: #F62B84;
+                }
+                .midpics{
+                    height: 350px;
+                    width:350px;
+                    box-shadow: 10px 10px 5px #aaaaaa;
+                 }
+
+                 .midpics:hover{
+                     height:360px;
+                     width:360px;
+                     transition:0.5s;
+                 }
+                 .btn{
+                    background-color: #F62B84;
+                    border-color: white;
+                }
+ 
+                .navbar-custom {
+                    position:absolute;
+                    top:0;
+                    width: 100%;
+                }
+                .navbar-header a{
+                    font-size: 25px;
+
+                }
+                header {
+                    height: 300px;
+                    padding: 100px 50px;
+                    width: 100%;
+                    color:white;
+                }
+
+                header h1{
+                    font-size: 50px;
+                }
+
+                #post {
+                    border-bottom: 1px solid black;
+
+                }
+
+                #post h1 {
+                    font-weight:bold;
+
+                }
+
+                #post h1 a{
+                    color: yellow;
+                    text-decoration:none;
+                }
+
+                #post h1 a:hover{
+                    color:red;
+                    transition: 0.3s;
+                }
+
+                .down-btn{
+                    padding: 50px 0px;
+                }
+
+                .btn {
+                    border-radius:0;
+                }
+
+                .btn-default:hover{
+                    background:red;
+                }
+                .nav-mycenter{
+                    float: none;
+                    display: table;
+                    table-layout: fixed;
+                    margin:0 auto;
+                }
+
+                .nav-mycenter li a:hover{
+                    background:white;
+                }
+
+                .m-col {
+                   -webkit-column-count:2;
+                   margin-right: 25%;
+                }
+
+                #footer{
+                    background-color:#F62B84;
+                }
+                #footer a{
+                    text-decoration: none;
+                    color:white;
+                }
+                #bottom{
+                    margin-left: 15%;
+                }
+
+                .centerpic{
+                    box-shadow: 10px 10px 5px #aaaaaa;
+                }
+                
+                .abouttext{
+                    font-family: "Metropolis-Light";
+                    padding-right: 20%;
+                }
+                body{
+                    font-family: "Metropolis-Light";
+                }
+            </style>
+      </head>
+    <body style="background:#f0f0f0;">
+        <nav class="navbar navbar-custom">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand">JJ</a>
+                </div>
+
+                <div class="nav navbar-nav form-inline navbar-right" style="padding:10px"> 
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="post.html">Weekly 5</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </nav> 
+        <header style="background: url(image/header.jpg);">
+            <div class="text-center">
+                <h1> JJ Music Blog</h1>
+                <div class="lead"> Home of the hits and trends</div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1> Frequently Asked Questions</h1>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap1" data-toggle="collapse" data-parent="#myaccordion">Availed service trouble/issues/bugs <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap1">
+                                <div class="panel-body">For service troubles, please provide the ID number of your service as well as a short description about its function and reach out to the following email for faster response: debugger@jj.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap2" data-toggle="collapse" data-parent="#myaccordion">Privacy and/or network issues <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap2">
+                                <div class="panel-body">Make sure that all your data/files for your service is backed up, and ready for deletion incase of breaches. For privacy breach or concerns please urgently reach out to us to any channel so that we can help you. </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap3" data-toggle="collapse" data-parent="#myaccordion">Billing and purchases <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap3">
+                                <div class="panel-body">If you are paying via credit card, JJ automatically bills your card monthly for the fees with regards to the package and extras you have availed, your service will go down in a week if payment gets declined. Troubles with payment? Over charged? Please reach out to cashier@jj.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap4" data-toggle="collapse" data-parent="#myaccordion">Copyright Law Infringement <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap4">
+                                <div class="panel-body">Here at JJ we make sure that every content we post is free of copyright, adding anything illegal or copyrighted materials to your service will automatically deem your contract with JJ and may result in extra charges.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div id="contactus"> 
+                        <h1> Contact Us</h1>
+                        <p id="contactdesc"> Still have questions and/or clarifications? Send us a message through these channels and we'll be sure to reply within at least one business day.</p>
+                        <p> <span class="glyphicon glyphicon-envelope"></span> inquiry@jj.com</p>
+                        <p> <span class="glyphicon glyphicon-user"></span> facebook.com/jjenterprises</p>
+                        <p> <span class="glyphicon glyphicon-phone-alt"></span> 012-3456-789</p>
+                        <p> <span class="glyphicon glyphicon-pushpin"></span> 91 Mill Road St., Cambridge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 id="submitticket"> Or submit a ticket by filling up this form:</h1> 
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="container">        
+            <form class="form-horizontal">
+            <div class ="form-group">
+                <label class="control-label col-md-2">Department: </label>
+                    <div class="col-md-10">
+                        <select class="form-control">
+                            <option>Web Dev</option>
+                            <option>App Dev</option>
+                            <option>Database Handling</option>
+                            <option>IT Solutions</option>
+                            <option>Branding</option>
+                            <option>Photo/Video Editing</option>
+                        </select>
+                    </div>
+            </div>
+            <div class ="form-group">
+                <label for="name" class="control-label col-md-2">Subject:</label>
+                    <div class="col-md-10">	
+                        <input type="text" class="form-control">
+                    </div>
+            </div>
+            <div class ="form-group">
+                <label for="comment" class="control-label col-md-2">Ticket Detail:</label>
+                    <div class="col-md-10">
+                        <textarea class="form-control" rows="10"></textarea>
+                    </div>
+            </div>
+            <div class ="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button class="btn btn-success btn-block">Click to Submit</button>
+                </div>
+            </div> 
+            </form>
+        </div>
+        <div class="container-fluid" id="footer">
+            <ul class="nav navbar-nav nav-mycenter">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Pop</a></li>
+                <li><a href="#">Indie</a></li>
+                <li><a href="#">OPM</a></li>
+            </ul>
+        </div>
+        <script>
+            ScrollReveal().reveal('header h1',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('.row',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('.lead',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('form',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('.col',{distance:'100px',duration:2000});
+        </script>
+    </body>
+</html>
+         
+            

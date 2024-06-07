@@ -1,0 +1,79 @@
+.navbar {
+    border-radius: 0;
+    background-color: white;
+    border-color: white;
+}
+#myNavbar a {
+    color: black;
+}
+
+.navbar-custom {
+    position:absolute;
+    top:0;
+    width: 100%;
+}
+.navbar-header a{
+    font-size: 25px;
+
+}
+.footer{
+    height: 50px;
+    background-color: white;
+}
+
+.footer p{
+    margin-top: 1.2%;
+}
+#logo {
+    font-family: "Metropolis-Bold";
+    color: black;
+}
+
+#view {
+    color: white;
+    text-decoration: underline;
+}
+.example1 {
+    top: 0%;
+    height: 55px;	
+    overflow: hidden;
+    position: relative;
+    background-color: black;
+    }
+    /* Move it (define the animation) */
+    @-moz-keyframes example1 {
+        0%   { -moz-transform: translateX(40%); }
+        100% { -moz-transform: translateX(-100%); }
+    }
+    @-webkit-keyframes example1 {
+        0%   { -webkit-transform: translateX(40%); }
+        100% { -webkit-transform: translateX(-100%); }
+    }
+     @keyframes example1 {
+        0%   { 
+        transform: translateX(40%); 		
+    }
+        100% { 
+        transform: translateX(-100%); 
+    }
+}
+.example1 h3 {
+    font-size: 35px;
+    font-family: "Metropolis-Light";
+    color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    line-height: 50px;
+    text-align: center;
+    /* Starting position */
+    -moz-transform:translateX(50%);
+    -webkit-transform:translateX(50%);	
+    transform:translateX(50%);
+    /* Apply animation to this element */	
+    -moz-animation: example1 45s linear infinite;
+    -webkit-animation: example1 45s linear infinite;
+    animation: example1 45s linear infinite;
+}
+

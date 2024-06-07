@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Contact Us</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-grid.css">
+        <link rel="stylesheet" href="css/mycss.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <style>
+            @font-face {
+               font-family: "Metropolis-Light";
+               src: url(fonts/Metropolis-Light.otf);
+           }
+           @font-face{
+               font-family: "Metropolis-Bold";
+               src: url(fonts/Metropolis-Bold.otf);
+           }
+           .panel-heading{
+               background-color: black;
+           }
+           body {
+                    background-image:url('img/bubbles.jpg');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+           .panel-heading:hover a{
+               color: black;
+               transition: 0.4s;
+               text-decoration: none;
+           }
+           .panel-heading:hover {
+               transition:0.4s;
+               background-color:white;
+           }
+   
+           .panel-heading a{
+               text-decoration: none;
+               color: white;
+           }
+           .panel-body{
+               background-color: black;
+               font-family: "Metropolis-Light";
+               color: white;
+           }
+           h1{
+               font-family: "Metropolis-Bold";
+           }
+           #contactus p{
+               font-family: "Metropolis-Light";
+               font-size: 23px;
+               margin-bottom: 6%;
+           }
+           
+           #contactdesc{
+               color: #ededed;
+           }
+           .panel{
+               margin-top: 6%;
+           }
+   
+           #submitticket{
+               color: white!important;
+               margin-top: 15%;
+           }
+   
+           .btn{
+               background-color: black;
+               border-color: white;
+           }
+   
+           .btn:hover{
+               background-color: white;
+               color:black;
+               transition: 0.4s;
+               border-color: black;
+           }
+   
+           .container{
+               animation: fadeIn 1.5s;
+           }
+       </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Aqualife</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="aquarium.html">Aquarium</a></li>
+                        <li><a href="accessories.html">Accessories</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1> Frequently Asked Questions</h1>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap1" data-toggle="collapse" data-parent="#myaccordion">Refunds <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap1">
+                                <div class="panel-body">For service troubles, please provide the ID number of your service as well as a short description about its function and reach out to the following email for faster response: debugger@jj.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap2" data-toggle="collapse" data-parent="#myaccordion">Aquarium Troubles <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap2">
+                                <div class="panel-body">Make sure that all your data/files for your service is backed up, and ready for deletion incase of breaches. For privacy breach or concerns please urgently reach out to us to any channel so that we can help you. </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap3" data-toggle="collapse" data-parent="#myaccordion">Billing and purchases <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap3">
+                                <div class="panel-body">If you are paying via credit card, JJ automatically bills your card monthly for the fees with regards to the package and extras you have availed, your service will go down in a week if payment gets declined. Troubles with payment? Over charged? Please reach out to cashier@jj.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group" id="myaccordion">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4>
+                                    <a href="#colap4" data-toggle="collapse" data-parent="#myaccordion">Copyright Law Infringement <span class="glyphicon glyphicon-menu-down"></span> </a>
+                                </h4>
+                            </div>
+                            <div class="collapse panel-collapse" id="colap4">
+                                <div class="panel-body">Here at JJ we make sure that every content we post is free of copyright, adding anything illegal or copyrighted materials to your service will automatically deem your contract with JJ and may result in extra charges.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="contactus"> 
+                        <h1> Contact Us</h1>
+                        <p id="contactdesc"> Still have questions and/or clarifications? Send us a message through these channels and we'll be sure to reply within at least one business day.</p>
+                        <p> <span class="glyphicon glyphicon-envelope"></span> inquiry@jj.com</p>
+                        <p> <span class="glyphicon glyphicon-user"></span> facebook.com/jjenterprises</p>
+                        <p> <span class="glyphicon glyphicon-phone-alt"></span> 012-3456-789</p>
+                        <p> <span class="glyphicon glyphicon-pushpin"></span> 91 Mill Road St., Cambridge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 id="submitticket"> Or submit a ticket by filling up this form:</h1> 
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="container">        
+            <form class="form-horizontal">
+            <div class ="form-group">
+                <label class="control-label col-md-2">Department: </label>
+                    <div class="col-md-10">
+                        <select class="form-control">
+                            <option>Customer Service</option>
+                            <option>Veterinary Concerns</option>
+                            <option>Animals</option>
+                            <option>Fish</option>
+  
+                        </select>
+                    </div>
+            </div>
+            <div class ="form-group">
+                <label for="name" class="control-label col-md-2">Subject:</label>
+                    <div class="col-md-10">	
+                        <input type="text" class="form-control">
+                    </div>
+            </div>
+            <div class ="form-group">
+                <label for="comment" class="control-label col-md-2">Ticket Detail:</label>
+                    <div class="col-md-10">
+                        <textarea class="form-control" rows="10"></textarea>
+                    </div>
+            </div>
+            <div class ="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button class="btn btn-success btn-block">Click to Submit</button>
+                </div>
+            </div> 
+            </form>
+        </div>
+       
+
+
+
+
+
+    </body>
+</html>

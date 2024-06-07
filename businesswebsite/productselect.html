@@ -1,0 +1,309 @@
+<html>
+      <head>
+            <title>BnHA Jacket</title>
+
+            <link rel="stylesheet" href="css/bootstrap.min.css">
+            <link rel="stylesheet" href="css/bootstrap-grid.css">
+            <link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="css/mycss.css">
+            <script src="js\jquery.js"></script>
+            <script src="js\bootstrap.min.js"></script>
+            <script src="https://unpkg.com/scrollreveal"></script>
+            <style>
+                @font-face {
+                    font-family: "Metropolis-Light";
+                    src: url(fonts/Metropolis-Light.otf);
+                }
+                @font-face{
+                    font-family: "Metropolis-Bold";
+                    src: url(fonts/Metropolis-Bold.otf);
+                }
+                h4 {
+                    font-family: "Metropolis-Bold";
+                    font-size: 100px;
+                    margin-top: 10%;
+                }
+                p {
+                    font-family: "Metropolis-Light";
+                }
+                #zxc{
+                    font-size: 25px;
+                }
+                #idpic img{
+                    height:650px;
+                    width:650px;
+                }
+
+                #idpic h4{
+                    font-size: 50px;
+                }
+                #idpic h5{
+                    font-size: 25px;
+                }
+                #idpic h6{
+                    font-size: 20px;
+                    color: gray;
+                    font-family: "Metropolis-Bold";
+                }
+
+                #relatedproducts h4{
+                    color: black;
+                    font-size: 30px;
+                }
+                .modal-lg {
+                    max-width: 80% !important;;
+                }
+                [type=radio] { 
+                    position: absolute;
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                    }
+
+                    /* IMAGE STYLES */
+                    [type=radio] + img {
+                        cursor: pointer;
+                        height: 10px;
+                    }
+
+                    /* CHECKED STYLES */
+                    [type=radio]:checked + img {
+                        outline: 2px solid black;
+                }
+
+                #radiopics img{
+                    height: 100px;
+                    width: 100px;
+                }
+                #salepics img {
+                    height: 250px;
+                    width:225px;
+                }
+
+                #salepics p {
+                    font-family: "Metropolis-Light";
+                    font-size: 25px;
+                }
+            </style>
+      </head>
+    <body style="background:white" onLoad="preLoad()">
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v11.0" nonce="AozlkzM3"></script>
+        <script>
+            function preLoad() {
+                a1 = new Image; a1.src = 'img/animehoodie1.jpg';  
+                a2 = new Image; a2.src = 'img/style2.jpg';
+            }
+            function im(image) {
+                document.getElementById(image[0]).src = eval(image + ".src")
+            }
+        </script>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" id="logo">JJ Hoodies.</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-nav">
+                        <li><a href="index.html" id="underline">Home</a></li>
+                        <li><a href="products.html" id="underline">All Products</a></li>
+                        <li><a href="about.html" id="underline">About</a></li>
+                        <li><a href="contactus.html" id="underline">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="idpic">
+            <div class="container"> 
+                <div class="row">
+                    <div class="col-11 col-md-12 col-sm-12 col-lg-5">
+                        <h4> BnHA Hoodie </h4>
+                        <img src="img/animehoodie1.jpg" id="a">
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-3 col-md-3">
+                                    <a href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-screen-name="false" data-show-count="false">Tweet @TwitterDev</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                                <div class="col-3 col-md-3">
+                                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-11 col-md-12 col-sm-12 col-lg-1">
+                    </div>
+                    <div class="col-11 col-md-12 col-sm-12 col-lg-5">
+                        <div class="container">
+                            <div class="row">
+                                <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                <div class="col-md-6">
+                                    <hr>
+                                    <h6> Local Estimate </h6>
+                                    <h5> ₱2,341.25</h5> 
+                                </div>
+                                <div class="col-md-2">
+                                    <br>
+                                    <br>
+                                    <p> ($49.99)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5> Heavyweight Hoodie</h5>
+                        <p> The term “heavyweight” simply refers to a thicker garment. Heavyweight cotton sweatshirts will weigh slightly more than lightweight options, but they are made of thicker materials and retain heat better.</p>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2 col-2">
+                                    <h6> STYLE</h6>
+                                </div>
+                                <div class="col-md-10 col-10" id="radiopics">
+                                    <label>
+                                        <input type="radio" name="test" value="GDP" onClick="im('a1');" checked>
+                                        <img src="img/animehoodie1.jpg">
+                                      </label>
+                                      
+                                      <label>
+                                        <input type="radio" name="test" value="Population" onClick="im('a2');">
+                                        <img src="img/style2.jpg">
+                                      </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h6> SIZE</h6>
+                                </div>
+                                <div class="col">
+                                    <select name="cars" id="cars">
+                                        <option value="volvo">Select Size...</option>
+                                        <option value="saab">S</option>
+                                        <option value="mercedes">M</option>
+                                        <option value="audi">L</option>
+                                        <option value="audi">XL</option>
+                                        <option value="audi">2XL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h6> NOTE:</h6>
+                                </div>
+                                <div class="col">
+                                    <p> Sleeve length measured from the centre of the back right under the collar.<p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h6> SHIPPING:</h6>
+                                </div>
+                                <div class="col">
+                                    <p> This product is available for shipping to your country (within 5-6 working days).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h6> QUANTITY:</h6>
+                                </div>
+                                <div class="col">
+                                    <p> Only 3 items left!</p>
+                                    <input type="number" value="1" min="1" max="3" step="1"/>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <br>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary btn-block" onclick="window.location.href='checkout.html';" >Buy Now  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        
+        
+        <div id="relatedproducts">
+            <div class="container">
+                <Hr>
+                <h4> Related Products</h4>
+                <br>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <div class="thumbnail">
+                            <img src="img/animehoodie2.jpg" style="width: 100%;">
+                            <div class="caption">
+                                <h4 class="pull-right">360$</h4>
+                                <h4><a href="product.html">Itachi</a></h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <div class="thumbnail">
+                            <img src="img/animehoodie3.jpg" style="width: 100%;">
+                            <div class="caption">
+                                <h4 class="pull-right">1324$</h4>
+                                <h4><a href="product.html">Kaisen</a></h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <div class="thumbnail">
+                            <img src="img/animehoodie4.jpeg" style="width: 100%;">
+                            <div class="caption">
+                                <h4 class="pull-right">900$</h4>
+                                <h4><a href="product.html">Demon Slayer</a></h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="footer text-center">
+            <hr>
+            <p> Copyright © 2021, JJ. All rights reserved. | About | Privacy Policy | </p>
+            <hr>
+        </div>
+        <br>
+        <br>
+
+        <script>
+            ScrollReveal().reveal('header h1',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('.lead',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('#post',{distance:'100px',duration:2000});
+        </script>
+      </body>
+      
+</html>
+         
+            

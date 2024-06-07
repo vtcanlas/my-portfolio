@@ -1,0 +1,280 @@
+<html>
+      <head>
+            <title>JJ Hoodies</title>
+
+            <link rel="stylesheet" href="css/bootstrap.min.css">
+            <link rel="stylesheet" href="css/bootstrap-grid.css">
+            <link rel="stylesheet" href="css/bootstrap.css">
+            <link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="css/mycss.css">
+            <script src="js\jquery.js"></script>
+            <script src="js\bootstrap.min.js"></script>
+            <script src="https://unpkg.com/scrollreveal"></script>
+            <style>
+                @font-face {
+                    font-family: "Metropolis-Light";
+                    src: url(fonts/Metropolis-Light.otf);
+                }
+                @font-face{
+                    font-family: "Metropolis-Bold";
+                    src: url(fonts/Metropolis-Bold.otf);
+                }
+                body {
+                    font-family: "Metropolis-Light";
+                }
+                #centertext {
+                    margin-top: 8% ;
+                    margin-left: 20%;
+                    color: black;   
+                }
+                #centertext h4 {
+                    
+                    font-family: "Metropolis-Bold";
+                    font-size: 100px;
+                }
+                #centertext h6 {
+                    font-family: "Metropolis-Light";
+                    font-size: 60px;
+                    padding-right: 40%;
+                }
+                #hoodieslide {
+                    margin-top: 10%;
+                }
+                #hoodieslide img{
+                    height: 450px;
+                    width: 450px;
+                }
+                #hoodieslide img:hover{
+                    transition: 0.5s;
+                    height: 475px;
+                    width:475px;
+                }
+                #bottompart {
+                    margin-top: 8%;
+                    color: white;
+                    background-color: black;
+                }
+
+                #bottompart h4{
+                    padding-top:50px;
+                    font-family: "Metropolis-Bold";
+                    font-size: 60px;
+                }
+
+                #bottompart h6{
+                    font-family: "Metropolis-Light";
+                    font-size: 60px;
+                }
+                #bottompart p{
+                    font-family: "Metropolis-Light";
+                    font-size: 30px;
+                }
+                #bottompart img{
+                    height: 560px;
+                    width:800px;
+                }
+                #bottompart img:hover{
+                    transition: 1.5s;
+                    filter: brightness(50%) ;
+                    
+                }
+
+                #hoodie_titles p{
+                    font-family: "Metropolis-Bold";
+                    font-size: 30px;
+                }
+                #hoodieslide img:hover ~ #hoodie_titles p{
+                    transition: 0.5s;
+                    color: green;
+                }
+
+                #salepics img {
+                    height: 250px;
+                    width:225px;
+                }
+
+                #salepics p {
+                    font-family: "Metropolis-Light";
+                    font-size: 25px;
+                }
+                
+            </style>
+      </head>
+    <body style="background:white">
+        <div class="example1">
+            <h3> Start of July Sale! - <a data-target="#buy_me" data-toggle="modal">View</a></h3>
+            <div class="modal fade" id="buy_me">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <h2 class="modal-title">Save up to 60% off these products!</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid" id="salepics">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="productselect.html"><img src="img/animehoodie1.jpg"></a>
+                                        <h2> BnHA Hoodie </h2>
+                                        <p> <strike>120$ </strike>  NOW: 49.99$</p>
+                                    </div>
+                                    <div class="col">
+                                        <a href="productselect.html"><img src="img/plain2.jpg"></a>
+                                        <h2> Potato Hoodie </h2>
+                                        <p> <strike>90$ </strike>  NOW: 60.99$</p>
+                                    </div>
+                                    <div class="col">
+                                        <a href="productselect.html"><img src="img/kdahoodie3.jpg"></a>
+                                        <h2> Prestige Hoodie </h2>
+                                        <p> <strike>200$ </strike> NOW: 150$</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal">Okay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" id="logo">JJ Hoodies.</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-nav">
+                        <li><a href="index.html" id="underline">Home</a></li>
+                        <li><a href="products.html" id="underline">All Products</a></li>
+                        <li><a href="about.html" id="underline">About</a></li>
+                        <li><a href="contactus.html" id="underline">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div id="centertext">
+            <h4>
+                <span
+                   class="txt-rotate"
+                   data-period="2000"
+                   data-rotate='[ "JJ", "Quality", "Comfy", "Trendy" ]'></span>
+                Hoodies.
+              </h4>
+            <h6>We make hoodies that are fashionable, comfortable, and aligns with the best of your interests.</h6>
+        </div>
+        <div id="hoodieslide">
+            <div class="container-fluid text-center">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <a href="products.html"><img src="img/animehoodie1.jpg"></a>
+                        <p>Anime</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <a href="products.html"><img src="img/plainhoodie.jpg"></a>
+                        <p>Homely</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                        <a href="products.html"><img src="img/kdahoodie.jpg"></a>
+                        <p>KDA Premium</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="bottompart" class="text-center">
+            <h4> Make sure to visit our other JJ websites! </h4>
+            <br><br><br>
+            <div class="container-fluid">
+                <div class="row" id="websites">
+                    <div class="col">
+                        <a href="blog/index.html"><img src="img/musicblog.jpg" class="img-fluid"> </a>
+                        <h6> JJ Music Blog </h6>
+                        <p> The best music each week handpicked for the best mood.</p>
+                    </div>
+                    <div class="col">
+                        <a href="Activity10/index.html"><img src="img/aqualife.jpg" class="img-fluid"></a>
+                        <h6> JJ Aqualife </h6>
+                        <p> Your best stop for all your aqua-domestic needs.</p>
+                    </div>
+                </div>
+            </div>
+            <br><br><br>
+        </div>
+
+        <div class="footer text-center">
+            <p> Copyright © 2021, JJ. All rights reserved. | About | Privacy Policy | </p>
+        </div>
+
+        <script>
+            ScrollReveal().reveal('#centertext',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('#hoodieslide',{distance:'100px',duration:2000});
+            ScrollReveal().reveal('#bottompart',{distance:'100px',duration:2000});
+            var TxtRotate = function(el, toRotate, period) {
+                this.toRotate = toRotate;
+                this.el = el;
+                this.loopNum = 0;
+                this.period = parseInt(period, 10) || 2000;
+                this.txt = '';
+                this.tick();
+                this.isDeleting = false;
+            };
+
+            TxtRotate.prototype.tick = function() {
+                var i = this.loopNum % this.toRotate.length;
+                var fullTxt = this.toRotate[i];
+
+                if (this.isDeleting) {
+                    this.txt = fullTxt.substring(0, this.txt.length - 1);
+                } else {
+                    this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+            var that = this;
+            var delta = 300 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function() {
+                that.tick();
+            }, delta);
+            };
+
+            window.onload = function() {
+            var elements = document.getElementsByClassName('txt-rotate');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-rotate');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                new TxtRotate(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+            document.body.appendChild(css);
+            }
+        </script>
+      </body>
+      
+</html>
+         
+            
