@@ -1,0 +1,1456 @@
+<?php
+
+namespace PHPMaker2022\project1;
+
+use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\FetchMode;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
+
+/**
+ * Page class
+ */
+class Pool2Edit extends Pool2
+{
+    use MessagesTrait;
+
+    // Page ID
+    public $PageID = "edit";
+
+    // Project ID
+    public $ProjectID = PROJECT_ID;
+
+    // Table name
+    public $TableName = 'pool2';
+
+    // Page object name
+    public $PageObjName = "Pool2Edit";
+
+    // View file path
+    public $View = null;
+
+    // Title
+    public $Title = null; // Title for <title> tag
+
+    // Rendering View
+    public $RenderingView = false;
+
+    // Page headings
+    public $Heading = "";
+    public $Subheading = "";
+    public $PageHeader;
+    public $PageFooter;
+
+    // Page layout
+    public $UseLayout = true;
+
+    // Page terminated
+    private $terminated = false;
+
+    // Page heading
+    public function pageHeading()
+    {
+        global $Language;
+        if ($this->Heading != "") {
+            return $this->Heading;
+        }
+        if (method_exists($this, "tableCaption")) {
+            return $this->tableCaption();
+        }
+        return "";
+    }
+
+    // Page subheading
+    public function pageSubheading()
+    {
+        global $Language;
+        if ($this->Subheading != "") {
+            return $this->Subheading;
+        }
+        if ($this->TableName) {
+            return $Language->phrase($this->PageID);
+        }
+        return "";
+    }
+
+    // Page name
+    public function pageName()
+    {
+        return CurrentPageName();
+    }
+
+    // Page URL
+    public function pageUrl($withArgs = true)
+    {
+        $route = GetRoute();
+        $args = $route->getArguments();
+        if (!$withArgs) {
+            foreach ($args as $key => &$val) {
+                $val = "";
+            }
+            unset($val);
+        }
+        $url = rtrim(UrlFor($route->getName(), $args), "/") . "?";
+        if ($this->UseTokenInUrl) {
+            $url .= "t=" . $this->TableVar . "&"; // Add page token
+        }
+        return $url;
+    }
+
+    // Show Page Header
+    public function showPageHeader()
+    {
+        $header = $this->PageHeader;
+        $this->pageDataRendering($header);
+        if ($header != "") { // Header exists, display
+            echo '<p id="ew-page-header">' . $header . '</p>';
+        }
+    }
+
+    // Show Page Footer
+    public function showPageFooter()
+    {
+        $footer = $this->PageFooter;
+        $this->pageDataRendered($footer);
+        if ($footer != "") { // Footer exists, display
+            echo '<p id="ew-page-footer">' . $footer . '</p>';
+        }
+    }
+
+    // Validate page request
+    protected function isPageRequest()
+    {
+        global $CurrentForm;
+        if ($this->UseTokenInUrl) {
+            if ($CurrentForm) {
+                return $this->TableVar == $CurrentForm->getValue("t");
+            }
+            if (Get("t") !== null) {
+                return $this->TableVar == Get("t");
+            }
+        }
+        return true;
+    }
+
+    // Constructor
+    public function __construct()
+    {
+        global $Language, $DashboardReport, $DebugTimer;
+        global $UserTable;
+
+        // Initialize
+        $GLOBALS["Page"] = &$this;
+
+        // Language object
+        $Language = Container("language");
+
+        // Parent constuctor
+        parent::__construct();
+
+        // Table object (pool2)
+        if (!isset($GLOBALS["pool2"]) || get_class($GLOBALS["pool2"]) == PROJECT_NAMESPACE . "pool2") {
+            $GLOBALS["pool2"] = &$this;
+        }
+
+        // Table name (for backward compatibility only)
+        if (!defined(PROJECT_NAMESPACE . "TABLE_NAME")) {
+            define(PROJECT_NAMESPACE . "TABLE_NAME", 'pool2');
+        }
+
+        // Start timer
+        $DebugTimer = Container("timer");
+
+        // Debug message
+        LoadDebugMessage();
+
+        // Open connection
+        $GLOBALS["Conn"] = $GLOBALS["Conn"] ?? $this->getConnection();
+
+        // User table object
+        $UserTable = Container("usertable");
+    }
+
+    // Get content from stream
+    public function getContents($stream = null): string
+    {
+        global $Response;
+        return is_object($Response) ? $Response->getBody() : ob_get_clean();
+    }
+
+    // Is lookup
+    public function isLookup()
+    {
+        return SameText(Route(0), Config("API_LOOKUP_ACTION"));
+    }
+
+    // Is AutoFill
+    public function isAutoFill()
+    {
+        return $this->isLookup() && SameText(Post("ajax"), "autofill");
+    }
+
+    // Is AutoSuggest
+    public function isAutoSuggest()
+    {
+        return $this->isLookup() && SameText(Post("ajax"), "autosuggest");
+    }
+
+    // Is modal lookup
+    public function isModalLookup()
+    {
+        return $this->isLookup() && SameText(Post("ajax"), "modal");
+    }
+
+    // Is terminated
+    public function isTerminated()
+    {
+        return $this->terminated;
+    }
+
+    /**
+     * Terminate page
+     *
+     * @param string $url URL for direction
+     * @return void
+     */
+    public function terminate($url = "")
+    {
+        if ($this->terminated) {
+            return;
+        }
+        global $ExportFileName, $TempImages, $DashboardReport, $Response;
+
+        // Page is terminated
+        $this->terminated = true;
+
+         // Page Unload event
+        if (method_exists($this, "pageUnload")) {
+            $this->pageUnload();
+        }
+
+        // Global Page Unloaded event (in userfn*.php)
+        Page_Unloaded();
+
+        // Export
+        if ($this->CustomExport && $this->CustomExport == $this->Export && array_key_exists($this->CustomExport, Config("EXPORT_CLASSES"))) {
+            $content = $this->getContents();
+            if ($ExportFileName == "") {
+                $ExportFileName = $this->TableVar;
+            }
+            $class = PROJECT_NAMESPACE . Config("EXPORT_CLASSES." . $this->CustomExport);
+            if (class_exists($class)) {
+                $tbl = Container("pool2");
+                $doc = new $class($tbl);
+                $doc->Text = @$content;
+                if ($this->isExport("email")) {
+                    echo $this->exportEmail($doc->Text);
+                } else {
+                    $doc->export();
+                }
+                DeleteTempImages(); // Delete temp images
+                return;
+            }
+        }
+        if (!IsApi() && method_exists($this, "pageRedirecting")) {
+            $this->pageRedirecting($url);
+        }
+
+        // Close connection
+        CloseConnections();
+
+        // Return for API
+        if (IsApi()) {
+            $res = $url === true;
+            if (!$res) { // Show error
+                WriteJson(array_merge(["success" => false], $this->getMessages()));
+            }
+            return;
+        } else { // Check if response is JSON
+            if (StartsString("application/json", $Response->getHeaderLine("Content-type")) && $Response->getBody()->getSize()) { // With JSON response
+                $this->clearMessages();
+                return;
+            }
+        }
+
+        // Go to URL if specified
+        if ($url != "") {
+            if (!Config("DEBUG") && ob_get_length()) {
+                ob_end_clean();
+            }
+
+            // Handle modal response
+            if ($this->IsModal) { // Show as modal
+                $row = ["url" => GetUrl($url), "modal" => "1"];
+                $pageName = GetPageName($url);
+                if ($pageName != $this->getListUrl()) { // Not List page
+                    $row["caption"] = $this->getModalCaption($pageName);
+                    if ($pageName == "Pool2View") {
+                        $row["view"] = "1";
+                    }
+                } else { // List page should not be shown as modal => error
+                    $row["error"] = $this->getFailureMessage();
+                    $this->clearFailureMessage();
+                }
+                WriteJson($row);
+            } else {
+                SaveDebugMessage();
+                Redirect(GetUrl($url));
+            }
+        }
+        return; // Return to controller
+    }
+
+    // Get records from recordset
+    protected function getRecordsFromRecordset($rs, $current = false)
+    {
+        $rows = [];
+        if (is_object($rs)) { // Recordset
+            while ($rs && !$rs->EOF) {
+                $this->loadRowValues($rs); // Set up DbValue/CurrentValue
+                $row = $this->getRecordFromArray($rs->fields);
+                if ($current) {
+                    return $row;
+                } else {
+                    $rows[] = $row;
+                }
+                $rs->moveNext();
+            }
+        } elseif (is_array($rs)) {
+            foreach ($rs as $ar) {
+                $row = $this->getRecordFromArray($ar);
+                if ($current) {
+                    return $row;
+                } else {
+                    $rows[] = $row;
+                }
+            }
+        }
+        return $rows;
+    }
+
+    // Get record from array
+    protected function getRecordFromArray($ar)
+    {
+        $row = [];
+        if (is_array($ar)) {
+            foreach ($ar as $fldname => $val) {
+                if (array_key_exists($fldname, $this->Fields) && ($this->Fields[$fldname]->Visible || $this->Fields[$fldname]->IsPrimaryKey)) { // Primary key or Visible
+                    $fld = &$this->Fields[$fldname];
+                    if ($fld->HtmlTag == "FILE") { // Upload field
+                        if (EmptyValue($val)) {
+                            $row[$fldname] = null;
+                        } else {
+                            if ($fld->DataType == DATATYPE_BLOB) {
+                                $url = FullUrl(GetApiUrl(Config("API_FILE_ACTION") .
+                                    "/" . $fld->TableVar . "/" . $fld->Param . "/" . rawurlencode($this->getRecordKeyValue($ar))));
+                                $row[$fldname] = ["type" => ContentType($val), "url" => $url, "name" => $fld->Param . ContentExtension($val)];
+                            } elseif (!$fld->UploadMultiple || !ContainsString($val, Config("MULTIPLE_UPLOAD_SEPARATOR"))) { // Single file
+                                $url = FullUrl(GetApiUrl(Config("API_FILE_ACTION") .
+                                    "/" . $fld->TableVar . "/" . Encrypt($fld->physicalUploadPath() . $val)));
+                                $row[$fldname] = ["type" => MimeContentType($val), "url" => $url, "name" => $val];
+                            } else { // Multiple files
+                                $files = explode(Config("MULTIPLE_UPLOAD_SEPARATOR"), $val);
+                                $ar = [];
+                                foreach ($files as $file) {
+                                    $url = FullUrl(GetApiUrl(Config("API_FILE_ACTION") .
+                                        "/" . $fld->TableVar . "/" . Encrypt($fld->physicalUploadPath() . $file)));
+                                    if (!EmptyValue($file)) {
+                                        $ar[] = ["type" => MimeContentType($file), "url" => $url, "name" => $file];
+                                    }
+                                }
+                                $row[$fldname] = $ar;
+                            }
+                        }
+                    } else {
+                        $row[$fldname] = $val;
+                    }
+                }
+            }
+        }
+        return $row;
+    }
+
+    // Get record key value from array
+    protected function getRecordKeyValue($ar)
+    {
+        $key = "";
+        if (is_array($ar)) {
+            $key .= @$ar['pool_id'];
+        }
+        return $key;
+    }
+
+    /**
+     * Hide fields for add/edit
+     *
+     * @return void
+     */
+    protected function hideFieldsForAddEdit()
+    {
+        if ($this->isAdd() || $this->isCopy() || $this->isGridAdd()) {
+            $this->pool_id->Visible = false;
+        }
+    }
+
+    // Lookup data
+    public function lookup($ar = null)
+    {
+        global $Language, $Security;
+
+        // Get lookup object
+        $fieldName = $ar["field"] ?? Post("field");
+        $lookup = $this->Fields[$fieldName]->Lookup;
+
+        // Get lookup parameters
+        $lookupType = $ar["ajax"] ?? Post("ajax", "unknown");
+        $pageSize = -1;
+        $offset = -1;
+        $searchValue = "";
+        if (SameText($lookupType, "modal") || SameText($lookupType, "filter")) {
+            $searchValue = $ar["q"] ?? Param("q") ?? $ar["sv"] ?? Post("sv", "");
+            $pageSize = $ar["n"] ?? Param("n") ?? $ar["recperpage"] ?? Post("recperpage", 10);
+        } elseif (SameText($lookupType, "autosuggest")) {
+            $searchValue = $ar["q"] ?? Param("q", "");
+            $pageSize = $ar["n"] ?? Param("n", -1);
+            $pageSize = is_numeric($pageSize) ? (int)$pageSize : -1;
+            if ($pageSize <= 0) {
+                $pageSize = Config("AUTO_SUGGEST_MAX_ENTRIES");
+            }
+        }
+        $start = $ar["start"] ?? Param("start", -1);
+        $start = is_numeric($start) ? (int)$start : -1;
+        $page = $ar["page"] ?? Param("page", -1);
+        $page = is_numeric($page) ? (int)$page : -1;
+        $offset = $start >= 0 ? $start : ($page > 0 && $pageSize > 0 ? ($page - 1) * $pageSize : 0);
+        $userSelect = Decrypt($ar["s"] ?? Post("s", ""));
+        $userFilter = Decrypt($ar["f"] ?? Post("f", ""));
+        $userOrderBy = Decrypt($ar["o"] ?? Post("o", ""));
+        $keys = $ar["keys"] ?? Post("keys");
+        $lookup->LookupType = $lookupType; // Lookup type
+        $lookup->FilterValues = []; // Clear filter values first
+        if ($keys !== null) { // Selected records from modal
+            if (is_array($keys)) {
+                $keys = implode(Config("MULTIPLE_OPTION_SEPARATOR"), $keys);
+            }
+            $lookup->FilterFields = []; // Skip parent fields if any
+            $lookup->FilterValues[] = $keys; // Lookup values
+            $pageSize = -1; // Show all records
+        } else { // Lookup values
+            $lookup->FilterValues[] = $ar["v0"] ?? $ar["lookupValue"] ?? Post("v0", Post("lookupValue", ""));
+        }
+        $cnt = is_array($lookup->FilterFields) ? count($lookup->FilterFields) : 0;
+        for ($i = 1; $i <= $cnt; $i++) {
+            $lookup->FilterValues[] = $ar["v" . $i] ?? Post("v" . $i, "");
+        }
+        $lookup->SearchValue = $searchValue;
+        $lookup->PageSize = $pageSize;
+        $lookup->Offset = $offset;
+        if ($userSelect != "") {
+            $lookup->UserSelect = $userSelect;
+        }
+        if ($userFilter != "") {
+            $lookup->UserFilter = $userFilter;
+        }
+        if ($userOrderBy != "") {
+            $lookup->UserOrderBy = $userOrderBy;
+        }
+        return $lookup->toJson($this, !is_array($ar)); // Use settings from current page
+    }
+
+    // Properties
+    public $FormClassName = "ew-form ew-edit-form";
+    public $IsModal = false;
+    public $IsMobileOrModal = false;
+    public $DbMasterFilter;
+    public $DbDetailFilter;
+    public $HashValue; // Hash Value
+    public $DisplayRecords = 1;
+    public $StartRecord;
+    public $StopRecord;
+    public $TotalRecords = 0;
+    public $RecordRange = 10;
+    public $RecordCount;
+
+    /**
+     * Page run
+     *
+     * @return void
+     */
+    public function run()
+    {
+        global $ExportType, $CustomExportType, $ExportFileName, $UserProfile, $Language, $Security, $CurrentForm,
+            $SkipHeaderFooter;
+
+        // Is modal
+        $this->IsModal = Param("modal") == "1";
+        $this->UseLayout = $this->UseLayout && !$this->IsModal;
+
+        // Use layout
+        $this->UseLayout = $this->UseLayout && ConvertToBool(Param("layout", true));
+
+        // Create form object
+        $CurrentForm = new HttpForm();
+        $this->CurrentAction = Param("action"); // Set up current action
+        $this->pool_id->setVisibility();
+        $this->pool_name->setVisibility();
+        $this->pool_description->setVisibility();
+        $this->barangay->setVisibility();
+        $this->poolcat->setVisibility();
+        $this->address->setVisibility();
+        $this->contactno1->setVisibility();
+        $this->emailaddress->setVisibility();
+        $this->socmed->setVisibility();
+        $this->uname->setVisibility();
+        $this->hideFieldsForAddEdit();
+
+        // Set lookup cache
+        if (!in_array($this->PageID, Config("LOOKUP_CACHE_PAGE_IDS"))) {
+            $this->setUseLookupCache(false);
+        }
+
+        // Global Page Loading event (in userfn*.php)
+        Page_Loading();
+
+        // Page Load event
+        if (method_exists($this, "pageLoad")) {
+            $this->pageLoad();
+        }
+
+        // Set up lookup cache
+
+        // Check modal
+        if ($this->IsModal) {
+            $SkipHeaderFooter = true;
+        }
+        $this->IsMobileOrModal = IsMobile() || $this->IsModal;
+        $this->FormClassName = "ew-form ew-edit-form";
+        $loaded = false;
+        $postBack = false;
+
+        // Set up current action and primary key
+        if (IsApi()) {
+            // Load key values
+            $loaded = true;
+            if (($keyValue = Get("pool_id") ?? Key(0) ?? Route(2)) !== null) {
+                $this->pool_id->setQueryStringValue($keyValue);
+                $this->pool_id->setOldValue($this->pool_id->QueryStringValue);
+            } elseif (Post("pool_id") !== null) {
+                $this->pool_id->setFormValue(Post("pool_id"));
+                $this->pool_id->setOldValue($this->pool_id->FormValue);
+            } else {
+                $loaded = false; // Unable to load key
+            }
+
+            // Load record
+            if ($loaded) {
+                $loaded = $this->loadRow();
+            }
+            if (!$loaded) {
+                $this->setFailureMessage($Language->phrase("NoRecord")); // Set no record message
+                $this->terminate();
+                return;
+            }
+            $this->CurrentAction = "update"; // Update record directly
+            $this->OldKey = $this->getKey(true); // Get from CurrentValue
+            $postBack = true;
+        } else {
+            if (Post("action") !== null) {
+                $this->CurrentAction = Post("action"); // Get action code
+                if (!$this->isShow()) { // Not reload record, handle as postback
+                    $postBack = true;
+                }
+
+                // Get key from Form
+                $this->setKey(Post($this->OldKeyName), $this->isShow());
+            } else {
+                $this->CurrentAction = "show"; // Default action is display
+
+                // Load key from QueryString
+                $loadByQuery = false;
+                if (($keyValue = Get("pool_id") ?? Route("pool_id")) !== null) {
+                    $this->pool_id->setQueryStringValue($keyValue);
+                    $loadByQuery = true;
+                } else {
+                    $this->pool_id->CurrentValue = null;
+                }
+            }
+
+            // Load recordset
+            if ($this->isShow()) {
+                    // Load current record
+                    $loaded = $this->loadRow();
+                $this->OldKey = $loaded ? $this->getKey(true) : ""; // Get from CurrentValue
+            }
+        }
+
+        // Process form if post back
+        if ($postBack) {
+            $this->loadFormValues(); // Get form values
+        }
+
+        // Validate form if post back
+        if ($postBack) {
+            if (!$this->validateForm()) {
+                $this->EventCancelled = true; // Event cancelled
+                $this->restoreFormValues();
+                if (IsApi()) {
+                    $this->terminate();
+                    return;
+                } else {
+                    $this->CurrentAction = ""; // Form error, reset action
+                }
+            }
+        }
+
+        // Perform current action
+        switch ($this->CurrentAction) {
+            case "show": // Get a record to display
+                    if (!$loaded) { // Load record based on key
+                        if ($this->getFailureMessage() == "") {
+                            $this->setFailureMessage($Language->phrase("NoRecord")); // No record found
+                        }
+                        $this->terminate("Pool2List"); // No matching record, return to list
+                        return;
+                    }
+                break;
+            case "update": // Update
+                $returnUrl = $this->getReturnUrl();
+                if (GetPageName($returnUrl) == "Pool2List") {
+                    $returnUrl = $this->addMasterUrl($returnUrl); // List page, return to List page with correct master key if necessary
+                }
+                $this->SendEmail = true; // Send email on update success
+                if ($this->editRow()) { // Update record based on key
+                    if ($this->getSuccessMessage() == "") {
+                        $this->setSuccessMessage($Language->phrase("UpdateSuccess")); // Update success
+                    }
+                    if (IsApi()) {
+                        $this->terminate(true);
+                        return;
+                    } else {
+                        $this->terminate($returnUrl); // Return to caller
+                        return;
+                    }
+                } elseif (IsApi()) { // API request, return
+                    $this->terminate();
+                    return;
+                } elseif ($this->getFailureMessage() == $Language->phrase("NoRecord")) {
+                    $this->terminate($returnUrl); // Return to caller
+                    return;
+                } else {
+                    $this->EventCancelled = true; // Event cancelled
+                    $this->restoreFormValues(); // Restore form values if update failed
+                }
+        }
+
+        // Set up Breadcrumb
+        $this->setupBreadcrumb();
+
+        // Render the record
+        $this->RowType = ROWTYPE_EDIT; // Render as Edit
+        $this->resetAttributes();
+        $this->renderRow();
+
+        // Set LoginStatus / Page_Rendering / Page_Render
+        if (!IsApi() && !$this->isTerminated()) {
+            // Setup login status
+            SetupLoginStatus();
+
+            // Pass login status to client side
+            SetClientVar("login", LoginStatus());
+
+            // Global Page Rendering event (in userfn*.php)
+            Page_Rendering();
+
+            // Page Render event
+            if (method_exists($this, "pageRender")) {
+                $this->pageRender();
+            }
+
+            // Render search option
+            if (method_exists($this, "renderSearchOptions")) {
+                $this->renderSearchOptions();
+            }
+        }
+    }
+
+    // Get upload files
+    protected function getUploadFiles()
+    {
+        global $CurrentForm, $Language;
+    }
+
+    // Load form values
+    protected function loadFormValues()
+    {
+        // Load from form
+        global $CurrentForm;
+        $validate = !Config("SERVER_VALIDATE");
+
+        // Check field name 'pool_id' first before field var 'x_pool_id'
+        $val = $CurrentForm->hasValue("pool_id") ? $CurrentForm->getValue("pool_id") : $CurrentForm->getValue("x_pool_id");
+        if (!$this->pool_id->IsDetailKey) {
+            $this->pool_id->setFormValue($val);
+        }
+
+        // Check field name 'pool_name' first before field var 'x_pool_name'
+        $val = $CurrentForm->hasValue("pool_name") ? $CurrentForm->getValue("pool_name") : $CurrentForm->getValue("x_pool_name");
+        if (!$this->pool_name->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->pool_name->Visible = false; // Disable update for API request
+            } else {
+                $this->pool_name->setFormValue($val);
+            }
+        }
+
+        // Check field name 'pool_description' first before field var 'x_pool_description'
+        $val = $CurrentForm->hasValue("pool_description") ? $CurrentForm->getValue("pool_description") : $CurrentForm->getValue("x_pool_description");
+        if (!$this->pool_description->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->pool_description->Visible = false; // Disable update for API request
+            } else {
+                $this->pool_description->setFormValue($val);
+            }
+        }
+
+        // Check field name 'barangay' first before field var 'x_barangay'
+        $val = $CurrentForm->hasValue("barangay") ? $CurrentForm->getValue("barangay") : $CurrentForm->getValue("x_barangay");
+        if (!$this->barangay->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->barangay->Visible = false; // Disable update for API request
+            } else {
+                $this->barangay->setFormValue($val);
+            }
+        }
+
+        // Check field name 'poolcat' first before field var 'x_poolcat'
+        $val = $CurrentForm->hasValue("poolcat") ? $CurrentForm->getValue("poolcat") : $CurrentForm->getValue("x_poolcat");
+        if (!$this->poolcat->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->poolcat->Visible = false; // Disable update for API request
+            } else {
+                $this->poolcat->setFormValue($val, true, $validate);
+            }
+        }
+
+        // Check field name 'address' first before field var 'x_address'
+        $val = $CurrentForm->hasValue("address") ? $CurrentForm->getValue("address") : $CurrentForm->getValue("x_address");
+        if (!$this->address->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->address->Visible = false; // Disable update for API request
+            } else {
+                $this->address->setFormValue($val);
+            }
+        }
+
+        // Check field name 'contactno1' first before field var 'x_contactno1'
+        $val = $CurrentForm->hasValue("contactno1") ? $CurrentForm->getValue("contactno1") : $CurrentForm->getValue("x_contactno1");
+        if (!$this->contactno1->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->contactno1->Visible = false; // Disable update for API request
+            } else {
+                $this->contactno1->setFormValue($val);
+            }
+        }
+
+        // Check field name 'emailaddress' first before field var 'x_emailaddress'
+        $val = $CurrentForm->hasValue("emailaddress") ? $CurrentForm->getValue("emailaddress") : $CurrentForm->getValue("x_emailaddress");
+        if (!$this->emailaddress->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->emailaddress->Visible = false; // Disable update for API request
+            } else {
+                $this->emailaddress->setFormValue($val);
+            }
+        }
+
+        // Check field name 'socmed' first before field var 'x_socmed'
+        $val = $CurrentForm->hasValue("socmed") ? $CurrentForm->getValue("socmed") : $CurrentForm->getValue("x_socmed");
+        if (!$this->socmed->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->socmed->Visible = false; // Disable update for API request
+            } else {
+                $this->socmed->setFormValue($val);
+            }
+        }
+
+        // Check field name 'uname' first before field var 'x_uname'
+        $val = $CurrentForm->hasValue("uname") ? $CurrentForm->getValue("uname") : $CurrentForm->getValue("x_uname");
+        if (!$this->uname->IsDetailKey) {
+            if (IsApi() && $val === null) {
+                $this->uname->Visible = false; // Disable update for API request
+            } else {
+                $this->uname->setFormValue($val);
+            }
+        }
+    }
+
+    // Restore form values
+    public function restoreFormValues()
+    {
+        global $CurrentForm;
+        $this->pool_id->CurrentValue = $this->pool_id->FormValue;
+        $this->pool_name->CurrentValue = $this->pool_name->FormValue;
+        $this->pool_description->CurrentValue = $this->pool_description->FormValue;
+        $this->barangay->CurrentValue = $this->barangay->FormValue;
+        $this->poolcat->CurrentValue = $this->poolcat->FormValue;
+        $this->address->CurrentValue = $this->address->FormValue;
+        $this->contactno1->CurrentValue = $this->contactno1->FormValue;
+        $this->emailaddress->CurrentValue = $this->emailaddress->FormValue;
+        $this->socmed->CurrentValue = $this->socmed->FormValue;
+        $this->uname->CurrentValue = $this->uname->FormValue;
+    }
+
+    /**
+     * Load row based on key values
+     *
+     * @return void
+     */
+    public function loadRow()
+    {
+        global $Security, $Language;
+        $filter = $this->getRecordFilter();
+
+        // Call Row Selecting event
+        $this->rowSelecting($filter);
+
+        // Load SQL based on filter
+        $this->CurrentFilter = $filter;
+        $sql = $this->getCurrentSql();
+        $conn = $this->getConnection();
+        $res = false;
+        $row = $conn->fetchAssociative($sql);
+        if ($row) {
+            $res = true;
+            $this->loadRowValues($row); // Load row values
+        }
+        return $res;
+    }
+
+    /**
+     * Load row values from recordset or record
+     *
+     * @param Recordset|array $rs Record
+     * @return void
+     */
+    public function loadRowValues($rs = null)
+    {
+        if (is_array($rs)) {
+            $row = $rs;
+        } elseif ($rs && property_exists($rs, "fields")) { // Recordset
+            $row = $rs->fields;
+        } else {
+            $row = $this->newRow();
+        }
+        if (!$row) {
+            return;
+        }
+
+        // Call Row Selected event
+        $this->rowSelected($row);
+        $this->pool_id->setDbValue($row['pool_id']);
+        $this->pool_name->setDbValue($row['pool_name']);
+        $this->pool_description->setDbValue($row['pool_description']);
+        $this->barangay->setDbValue($row['barangay']);
+        $this->poolcat->setDbValue($row['poolcat']);
+        $this->address->setDbValue($row['address']);
+        $this->contactno1->setDbValue($row['contactno1']);
+        $this->emailaddress->setDbValue($row['emailaddress']);
+        $this->socmed->setDbValue($row['socmed']);
+        $this->uname->setDbValue($row['uname']);
+    }
+
+    // Return a row with default values
+    protected function newRow()
+    {
+        $row = [];
+        $row['pool_id'] = null;
+        $row['pool_name'] = null;
+        $row['pool_description'] = null;
+        $row['barangay'] = null;
+        $row['poolcat'] = null;
+        $row['address'] = null;
+        $row['contactno1'] = null;
+        $row['emailaddress'] = null;
+        $row['socmed'] = null;
+        $row['uname'] = null;
+        return $row;
+    }
+
+    // Load old record
+    protected function loadOldRecord()
+    {
+        // Load old record
+        $this->OldRecordset = null;
+        $validKey = $this->OldKey != "";
+        if ($validKey) {
+            $this->CurrentFilter = $this->getRecordFilter();
+            $sql = $this->getCurrentSql();
+            $conn = $this->getConnection();
+            $this->OldRecordset = LoadRecordset($sql, $conn);
+        }
+        $this->loadRowValues($this->OldRecordset); // Load row values
+        return $validKey;
+    }
+
+    // Render row values based on field settings
+    public function renderRow()
+    {
+        global $Security, $Language, $CurrentLanguage;
+
+        // Initialize URLs
+
+        // Call Row_Rendering event
+        $this->rowRendering();
+
+        // Common render codes for all row types
+
+        // pool_id
+        $this->pool_id->RowCssClass = "row";
+
+        // pool_name
+        $this->pool_name->RowCssClass = "row";
+
+        // pool_description
+        $this->pool_description->RowCssClass = "row";
+
+        // barangay
+        $this->barangay->RowCssClass = "row";
+
+        // poolcat
+        $this->poolcat->RowCssClass = "row";
+
+        // address
+        $this->address->RowCssClass = "row";
+
+        // contactno1
+        $this->contactno1->RowCssClass = "row";
+
+        // emailaddress
+        $this->emailaddress->RowCssClass = "row";
+
+        // socmed
+        $this->socmed->RowCssClass = "row";
+
+        // uname
+        $this->uname->RowCssClass = "row";
+
+        // View row
+        if ($this->RowType == ROWTYPE_VIEW) {
+            // pool_id
+            $this->pool_id->ViewValue = $this->pool_id->CurrentValue;
+            $this->pool_id->ViewCustomAttributes = "";
+
+            // pool_name
+            $this->pool_name->ViewValue = $this->pool_name->CurrentValue;
+            $this->pool_name->ViewCustomAttributes = "";
+
+            // pool_description
+            $this->pool_description->ViewValue = $this->pool_description->CurrentValue;
+            $this->pool_description->ViewCustomAttributes = "";
+
+            // barangay
+            $this->barangay->ViewValue = $this->barangay->CurrentValue;
+            $this->barangay->ViewCustomAttributes = "";
+
+            // poolcat
+            $this->poolcat->ViewValue = $this->poolcat->CurrentValue;
+            $this->poolcat->ViewValue = FormatNumber($this->poolcat->ViewValue, $this->poolcat->formatPattern());
+            $this->poolcat->ViewCustomAttributes = "";
+
+            // address
+            $this->address->ViewValue = $this->address->CurrentValue;
+            $this->address->ViewCustomAttributes = "";
+
+            // contactno1
+            $this->contactno1->ViewValue = $this->contactno1->CurrentValue;
+            $this->contactno1->ViewCustomAttributes = "";
+
+            // emailaddress
+            $this->emailaddress->ViewValue = $this->emailaddress->CurrentValue;
+            $this->emailaddress->ViewCustomAttributes = "";
+
+            // socmed
+            $this->socmed->ViewValue = $this->socmed->CurrentValue;
+            $this->socmed->ViewCustomAttributes = "";
+
+            // uname
+            $this->uname->ViewValue = $this->uname->CurrentValue;
+            $this->uname->ViewCustomAttributes = "";
+
+            // pool_id
+            $this->pool_id->LinkCustomAttributes = "";
+            $this->pool_id->HrefValue = "";
+
+            // pool_name
+            $this->pool_name->LinkCustomAttributes = "";
+            $this->pool_name->HrefValue = "";
+
+            // pool_description
+            $this->pool_description->LinkCustomAttributes = "";
+            $this->pool_description->HrefValue = "";
+
+            // barangay
+            $this->barangay->LinkCustomAttributes = "";
+            $this->barangay->HrefValue = "";
+
+            // poolcat
+            $this->poolcat->LinkCustomAttributes = "";
+            $this->poolcat->HrefValue = "";
+
+            // address
+            $this->address->LinkCustomAttributes = "";
+            $this->address->HrefValue = "";
+
+            // contactno1
+            $this->contactno1->LinkCustomAttributes = "";
+            $this->contactno1->HrefValue = "";
+
+            // emailaddress
+            $this->emailaddress->LinkCustomAttributes = "";
+            $this->emailaddress->HrefValue = "";
+
+            // socmed
+            $this->socmed->LinkCustomAttributes = "";
+            $this->socmed->HrefValue = "";
+
+            // uname
+            $this->uname->LinkCustomAttributes = "";
+            $this->uname->HrefValue = "";
+        } elseif ($this->RowType == ROWTYPE_EDIT) {
+            // pool_id
+            $this->pool_id->setupEditAttributes();
+            $this->pool_id->EditCustomAttributes = "";
+            $this->pool_id->EditValue = $this->pool_id->CurrentValue;
+            $this->pool_id->ViewCustomAttributes = "";
+
+            // pool_name
+            $this->pool_name->setupEditAttributes();
+            $this->pool_name->EditCustomAttributes = "";
+            if (!$this->pool_name->Raw) {
+                $this->pool_name->CurrentValue = HtmlDecode($this->pool_name->CurrentValue);
+            }
+            $this->pool_name->EditValue = HtmlEncode($this->pool_name->CurrentValue);
+            $this->pool_name->PlaceHolder = RemoveHtml($this->pool_name->caption());
+
+            // pool_description
+            $this->pool_description->setupEditAttributes();
+            $this->pool_description->EditCustomAttributes = "";
+            if (!$this->pool_description->Raw) {
+                $this->pool_description->CurrentValue = HtmlDecode($this->pool_description->CurrentValue);
+            }
+            $this->pool_description->EditValue = HtmlEncode($this->pool_description->CurrentValue);
+            $this->pool_description->PlaceHolder = RemoveHtml($this->pool_description->caption());
+
+            // barangay
+            $this->barangay->setupEditAttributes();
+            $this->barangay->EditCustomAttributes = "";
+            if (!$this->barangay->Raw) {
+                $this->barangay->CurrentValue = HtmlDecode($this->barangay->CurrentValue);
+            }
+            $this->barangay->EditValue = HtmlEncode($this->barangay->CurrentValue);
+            $this->barangay->PlaceHolder = RemoveHtml($this->barangay->caption());
+
+            // poolcat
+            $this->poolcat->setupEditAttributes();
+            $this->poolcat->EditCustomAttributes = "";
+            $this->poolcat->EditValue = HtmlEncode($this->poolcat->CurrentValue);
+            $this->poolcat->PlaceHolder = RemoveHtml($this->poolcat->caption());
+            if (strval($this->poolcat->EditValue) != "" && is_numeric($this->poolcat->EditValue)) {
+                $this->poolcat->EditValue = FormatNumber($this->poolcat->EditValue, null);
+            }
+
+            // address
+            $this->address->setupEditAttributes();
+            $this->address->EditCustomAttributes = "";
+            if (!$this->address->Raw) {
+                $this->address->CurrentValue = HtmlDecode($this->address->CurrentValue);
+            }
+            $this->address->EditValue = HtmlEncode($this->address->CurrentValue);
+            $this->address->PlaceHolder = RemoveHtml($this->address->caption());
+
+            // contactno1
+            $this->contactno1->setupEditAttributes();
+            $this->contactno1->EditCustomAttributes = "";
+            if (!$this->contactno1->Raw) {
+                $this->contactno1->CurrentValue = HtmlDecode($this->contactno1->CurrentValue);
+            }
+            $this->contactno1->EditValue = HtmlEncode($this->contactno1->CurrentValue);
+            $this->contactno1->PlaceHolder = RemoveHtml($this->contactno1->caption());
+
+            // emailaddress
+            $this->emailaddress->setupEditAttributes();
+            $this->emailaddress->EditCustomAttributes = "";
+            if (!$this->emailaddress->Raw) {
+                $this->emailaddress->CurrentValue = HtmlDecode($this->emailaddress->CurrentValue);
+            }
+            $this->emailaddress->EditValue = HtmlEncode($this->emailaddress->CurrentValue);
+            $this->emailaddress->PlaceHolder = RemoveHtml($this->emailaddress->caption());
+
+            // socmed
+            $this->socmed->setupEditAttributes();
+            $this->socmed->EditCustomAttributes = "";
+            if (!$this->socmed->Raw) {
+                $this->socmed->CurrentValue = HtmlDecode($this->socmed->CurrentValue);
+            }
+            $this->socmed->EditValue = HtmlEncode($this->socmed->CurrentValue);
+            $this->socmed->PlaceHolder = RemoveHtml($this->socmed->caption());
+
+            // uname
+            $this->uname->setupEditAttributes();
+            $this->uname->EditCustomAttributes = "";
+            if (!$this->uname->Raw) {
+                $this->uname->CurrentValue = HtmlDecode($this->uname->CurrentValue);
+            }
+            $this->uname->EditValue = HtmlEncode($this->uname->CurrentValue);
+            $this->uname->PlaceHolder = RemoveHtml($this->uname->caption());
+
+            // Edit refer script
+
+            // pool_id
+            $this->pool_id->LinkCustomAttributes = "";
+            $this->pool_id->HrefValue = "";
+
+            // pool_name
+            $this->pool_name->LinkCustomAttributes = "";
+            $this->pool_name->HrefValue = "";
+
+            // pool_description
+            $this->pool_description->LinkCustomAttributes = "";
+            $this->pool_description->HrefValue = "";
+
+            // barangay
+            $this->barangay->LinkCustomAttributes = "";
+            $this->barangay->HrefValue = "";
+
+            // poolcat
+            $this->poolcat->LinkCustomAttributes = "";
+            $this->poolcat->HrefValue = "";
+
+            // address
+            $this->address->LinkCustomAttributes = "";
+            $this->address->HrefValue = "";
+
+            // contactno1
+            $this->contactno1->LinkCustomAttributes = "";
+            $this->contactno1->HrefValue = "";
+
+            // emailaddress
+            $this->emailaddress->LinkCustomAttributes = "";
+            $this->emailaddress->HrefValue = "";
+
+            // socmed
+            $this->socmed->LinkCustomAttributes = "";
+            $this->socmed->HrefValue = "";
+
+            // uname
+            $this->uname->LinkCustomAttributes = "";
+            $this->uname->HrefValue = "";
+        }
+        if ($this->RowType == ROWTYPE_ADD || $this->RowType == ROWTYPE_EDIT || $this->RowType == ROWTYPE_SEARCH) { // Add/Edit/Search row
+            $this->setupFieldTitles();
+        }
+
+        // Call Row Rendered event
+        if ($this->RowType != ROWTYPE_AGGREGATEINIT) {
+            $this->rowRendered();
+        }
+    }
+
+    // Validate form
+    protected function validateForm()
+    {
+        global $Language;
+
+        // Check if validation required
+        if (!Config("SERVER_VALIDATE")) {
+            return true;
+        }
+        $validateForm = true;
+        if ($this->pool_id->Required) {
+            if (!$this->pool_id->IsDetailKey && EmptyValue($this->pool_id->FormValue)) {
+                $this->pool_id->addErrorMessage(str_replace("%s", $this->pool_id->caption(), $this->pool_id->RequiredErrorMessage));
+            }
+        }
+        if ($this->pool_name->Required) {
+            if (!$this->pool_name->IsDetailKey && EmptyValue($this->pool_name->FormValue)) {
+                $this->pool_name->addErrorMessage(str_replace("%s", $this->pool_name->caption(), $this->pool_name->RequiredErrorMessage));
+            }
+        }
+        if ($this->pool_description->Required) {
+            if (!$this->pool_description->IsDetailKey && EmptyValue($this->pool_description->FormValue)) {
+                $this->pool_description->addErrorMessage(str_replace("%s", $this->pool_description->caption(), $this->pool_description->RequiredErrorMessage));
+            }
+        }
+        if ($this->barangay->Required) {
+            if (!$this->barangay->IsDetailKey && EmptyValue($this->barangay->FormValue)) {
+                $this->barangay->addErrorMessage(str_replace("%s", $this->barangay->caption(), $this->barangay->RequiredErrorMessage));
+            }
+        }
+        if ($this->poolcat->Required) {
+            if (!$this->poolcat->IsDetailKey && EmptyValue($this->poolcat->FormValue)) {
+                $this->poolcat->addErrorMessage(str_replace("%s", $this->poolcat->caption(), $this->poolcat->RequiredErrorMessage));
+            }
+        }
+        if (!CheckInteger($this->poolcat->FormValue)) {
+            $this->poolcat->addErrorMessage($this->poolcat->getErrorMessage(false));
+        }
+        if ($this->address->Required) {
+            if (!$this->address->IsDetailKey && EmptyValue($this->address->FormValue)) {
+                $this->address->addErrorMessage(str_replace("%s", $this->address->caption(), $this->address->RequiredErrorMessage));
+            }
+        }
+        if ($this->contactno1->Required) {
+            if (!$this->contactno1->IsDetailKey && EmptyValue($this->contactno1->FormValue)) {
+                $this->contactno1->addErrorMessage(str_replace("%s", $this->contactno1->caption(), $this->contactno1->RequiredErrorMessage));
+            }
+        }
+        if ($this->emailaddress->Required) {
+            if (!$this->emailaddress->IsDetailKey && EmptyValue($this->emailaddress->FormValue)) {
+                $this->emailaddress->addErrorMessage(str_replace("%s", $this->emailaddress->caption(), $this->emailaddress->RequiredErrorMessage));
+            }
+        }
+        if ($this->socmed->Required) {
+            if (!$this->socmed->IsDetailKey && EmptyValue($this->socmed->FormValue)) {
+                $this->socmed->addErrorMessage(str_replace("%s", $this->socmed->caption(), $this->socmed->RequiredErrorMessage));
+            }
+        }
+        if ($this->uname->Required) {
+            if (!$this->uname->IsDetailKey && EmptyValue($this->uname->FormValue)) {
+                $this->uname->addErrorMessage(str_replace("%s", $this->uname->caption(), $this->uname->RequiredErrorMessage));
+            }
+        }
+
+        // Return validate result
+        $validateForm = $validateForm && !$this->hasInvalidFields();
+
+        // Call Form_CustomValidate event
+        $formCustomError = "";
+        $validateForm = $validateForm && $this->formCustomValidate($formCustomError);
+        if ($formCustomError != "") {
+            $this->setFailureMessage($formCustomError);
+        }
+        return $validateForm;
+    }
+
+    // Update record based on key values
+    protected function editRow()
+    {
+        global $Security, $Language;
+        $oldKeyFilter = $this->getRecordFilter();
+        $filter = $this->applyUserIDFilters($oldKeyFilter);
+        $conn = $this->getConnection();
+        $this->CurrentFilter = $filter;
+        $sql = $this->getCurrentSql();
+        $rsold = $conn->fetchAssociative($sql);
+        if (!$rsold) {
+            $this->setFailureMessage($Language->phrase("NoRecord")); // Set no record message
+            $editRow = false; // Update Failed
+        } else {
+            // Save old values
+            $this->loadDbValues($rsold);
+            $rsnew = [];
+
+            // pool_name
+            $this->pool_name->setDbValueDef($rsnew, $this->pool_name->CurrentValue, null, $this->pool_name->ReadOnly);
+
+            // pool_description
+            $this->pool_description->setDbValueDef($rsnew, $this->pool_description->CurrentValue, null, $this->pool_description->ReadOnly);
+
+            // barangay
+            $this->barangay->setDbValueDef($rsnew, $this->barangay->CurrentValue, null, $this->barangay->ReadOnly);
+
+            // poolcat
+            $this->poolcat->setDbValueDef($rsnew, $this->poolcat->CurrentValue, null, $this->poolcat->ReadOnly);
+
+            // address
+            $this->address->setDbValueDef($rsnew, $this->address->CurrentValue, null, $this->address->ReadOnly);
+
+            // contactno1
+            $this->contactno1->setDbValueDef($rsnew, $this->contactno1->CurrentValue, null, $this->contactno1->ReadOnly);
+
+            // emailaddress
+            $this->emailaddress->setDbValueDef($rsnew, $this->emailaddress->CurrentValue, "", $this->emailaddress->ReadOnly);
+
+            // socmed
+            $this->socmed->setDbValueDef($rsnew, $this->socmed->CurrentValue, null, $this->socmed->ReadOnly);
+
+            // uname
+            $this->uname->setDbValueDef($rsnew, $this->uname->CurrentValue, "", $this->uname->ReadOnly);
+
+            // Call Row Updating event
+            $updateRow = $this->rowUpdating($rsold, $rsnew);
+            if ($updateRow) {
+                if (count($rsnew) > 0) {
+                    $editRow = $this->update($rsnew, "", $rsold);
+                } else {
+                    $editRow = true; // No field to update
+                }
+                if ($editRow) {
+                }
+            } else {
+                if ($this->getSuccessMessage() != "" || $this->getFailureMessage() != "") {
+                    // Use the message, do nothing
+                } elseif ($this->CancelMessage != "") {
+                    $this->setFailureMessage($this->CancelMessage);
+                    $this->CancelMessage = "";
+                } else {
+                    $this->setFailureMessage($Language->phrase("UpdateCancelled"));
+                }
+                $editRow = false;
+            }
+        }
+
+        // Call Row_Updated event
+        if ($editRow) {
+            $this->rowUpdated($rsold, $rsnew);
+        }
+
+        // Clean upload path if any
+        if ($editRow) {
+        }
+
+        // Write JSON for API request
+        if (IsApi() && $editRow) {
+            $row = $this->getRecordsFromRecordset([$rsnew], true);
+            WriteJson(["success" => true, $this->TableVar => $row]);
+        }
+        return $editRow;
+    }
+
+    // Set up Breadcrumb
+    protected function setupBreadcrumb()
+    {
+        global $Breadcrumb, $Language;
+        $Breadcrumb = new Breadcrumb("index");
+        $url = CurrentUrl();
+        $Breadcrumb->add("list", $this->TableVar, $this->addMasterUrl("Pool2List"), "", $this->TableVar, true);
+        $pageId = "edit";
+        $Breadcrumb->add("edit", $pageId, $url);
+    }
+
+    // Setup lookup options
+    public function setupLookupOptions($fld)
+    {
+        if ($fld->Lookup !== null && $fld->Lookup->Options === null) {
+            // Get default connection and filter
+            $conn = $this->getConnection();
+            $lookupFilter = "";
+
+            // No need to check any more
+            $fld->Lookup->Options = [];
+
+            // Set up lookup SQL and connection
+            switch ($fld->FieldVar) {
+                default:
+                    $lookupFilter = "";
+                    break;
+            }
+
+            // Always call to Lookup->getSql so that user can setup Lookup->Options in Lookup_Selecting server event
+            $sql = $fld->Lookup->getSql(false, "", $lookupFilter, $this);
+
+            // Set up lookup cache
+            if (!$fld->hasLookupOptions() && $fld->UseLookupCache && $sql != "" && count($fld->Lookup->Options) == 0) {
+                $totalCnt = $this->getRecordCount($sql, $conn);
+                if ($totalCnt > $fld->LookupCacheCount) { // Total count > cache count, do not cache
+                    return;
+                }
+                $rows = $conn->executeQuery($sql)->fetchAll();
+                $ar = [];
+                foreach ($rows as $row) {
+                    $row = $fld->Lookup->renderViewRow($row, Container($fld->Lookup->LinkTable));
+                    $ar[strval($row["lf"])] = $row;
+                }
+                $fld->Lookup->Options = $ar;
+            }
+        }
+    }
+
+    // Set up starting record parameters
+    public function setupStartRecord()
+    {
+        if ($this->DisplayRecords == 0) {
+            return;
+        }
+        if ($this->isPageRequest()) { // Validate request
+            $startRec = Get(Config("TABLE_START_REC"));
+            if ($startRec !== null && is_numeric($startRec)) { // Check for "start" parameter
+                $this->StartRecord = $startRec;
+                $this->setStartRecordNumber($this->StartRecord);
+            }
+        }
+        $this->StartRecord = $this->getStartRecordNumber();
+
+        // Check if correct start record counter
+        if (!is_numeric($this->StartRecord) || $this->StartRecord == "") { // Avoid invalid start record counter
+            $this->StartRecord = 1; // Reset start record counter
+            $this->setStartRecordNumber($this->StartRecord);
+        } elseif ($this->StartRecord > $this->TotalRecords) { // Avoid starting record > total records
+            $this->StartRecord = (int)(($this->TotalRecords - 1) / $this->DisplayRecords) * $this->DisplayRecords + 1; // Point to last page first record
+            $this->setStartRecordNumber($this->StartRecord);
+        } elseif (($this->StartRecord - 1) % $this->DisplayRecords != 0) {
+            $this->StartRecord = (int)(($this->StartRecord - 1) / $this->DisplayRecords) * $this->DisplayRecords + 1; // Point to page boundary
+            $this->setStartRecordNumber($this->StartRecord);
+        }
+    }
+
+    // Page Load event
+    public function pageLoad()
+    {
+        //Log("Page Load");
+    }
+
+    // Page Unload event
+    public function pageUnload()
+    {
+        //Log("Page Unload");
+    }
+
+    // Page Redirecting event
+    public function pageRedirecting(&$url)
+    {
+        // Example:
+        //$url = "your URL";
+    }
+
+    // Message Showing event
+    // $type = ''|'success'|'failure'|'warning'
+    public function messageShowing(&$msg, $type)
+    {
+        if ($type == 'success') {
+            //$msg = "your success message";
+        } elseif ($type == 'failure') {
+            //$msg = "your failure message";
+        } elseif ($type == 'warning') {
+            //$msg = "your warning message";
+        } else {
+            //$msg = "your message";
+        }
+    }
+
+    // Page Render event
+    public function pageRender()
+    {
+        //Log("Page Render");
+    }
+
+    // Page Data Rendering event
+    public function pageDataRendering(&$header)
+    {
+        // Example:
+        //$header = "your header";
+    }
+
+    // Page Data Rendered event
+    public function pageDataRendered(&$footer)
+    {
+        // Example:
+        //$footer = "your footer";
+    }
+
+    // Form Custom Validate event
+    public function formCustomValidate(&$customError)
+    {
+        // Return error message in $customError
+        return true;
+    }
+}

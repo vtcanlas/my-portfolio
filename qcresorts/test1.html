@@ -1,0 +1,50 @@
+<html>
+<div>
+    <h2><u>Products and Services</u></h2>
+    <h4>
+      <select id="dropdown">
+        <option value="empty" disabled selected> please select </option>
+        <option value="0">Basic</option>
+        <option value="1">Intermediate</option>
+        <option value="2">Advanced</option>
+      </select>
+  
+      <p id="Desc-Change">1</p>
+      <p id="Cost-Change">2</p>
+      <p></p>
+      <p></p>
+    </h4>
+  </div>
+
+  <script>
+    window.onload = function() {
+  let
+    DescChange = document.getElementById("Desc-Change"),
+    CostChange = document.getElementById("Cost-Change"),
+    mySelect   = document.getElementById("dropdown")
+  ;
+
+
+  mySelect.onchange = function(){
+
+    switch (mySelect.value)  {
+      case "0":
+        DescChange.textContent = "Description: Basic care for car including wax and buffer";
+        CostChange.textContent = "Total cost: " + 59.99;
+      break;
+      case '1':
+        DescChange.textContent = "Mid-level care for car including Basic services and repainting"
+        CostChange.textContent = "Total cost: " + 119.99;
+      break;
+      case '2':
+        DescChange.textContent = "Advanced care for car including Basic, Intermediate and interior + window repair";
+        CostChange.textContent = "Total cost: " + 299.99;
+      break;
+      default:
+        DescChange.textContent = "";
+        CostChange.textContent = "";
+    }
+  }
+}
+</script>
+</html>
